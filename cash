@@ -1,0 +1,16 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <math.h>
+
+
+float change;
+    {
+do 
+
+    change = get_float("Change owed: ");
+
+while (change <= 0);
+    
+    printf("Change owed: %f", change);
+
+}
