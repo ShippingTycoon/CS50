@@ -1,0 +1,70 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <math.h>
+
+int main (void)
+{
+    int visa;
+    int amex;
+    int mastercard;
+    long card_number;
+    int nd;
+       long a;
+    long b;
+    long c;
+    long d;
+    long e;
+    long f;
+    long g;
+    long h;
+    long i;
+    long j;
+    long k;
+    long l;
+    long m;
+    
+    do
+    {
+    card_number = get_long("Number: ");
+    nd = (floor ( log10 ( card_number)) + 1);
+        }
+    while (card_number <= 0 || nd < 13 || nd == 14 || nd > 16);
+    
+    do
+    {    
+        a = card_number / 1000000000000;
+            card_number = card_number - (a * 1000000000000);
+        b = card_number / 100000000000;
+             card_number = card_number - (b* 100000000000);
+        c = card_number / 10000000000;
+              card_number = card_number - (c * 10000000000);
+        d = card_number / 1000000000;
+             card_number = card_number - (d * 1000000000);
+        e = card_number / 100000000;
+             card_number = card_number - (e * 100000000);
+        f = card_number / 10000000;
+             card_number = card_number - (f * 10000000);
+        g = card_number / 1000000;
+             card_number = card_number - (g * 1000000);
+        h = card_number / 100000;
+             card_number = card_number - (h * 100000);
+        i = card_number / 10000;
+             card_number = card_number - (i * 10000);
+        j = card_number / 1000;
+             card_number = card_number - (j * 1000);
+        k = card_number / 100;
+             card_number = card_number - (k * 100);
+        l = card_number / 10;
+             card_number = card_number - (l * 10);
+        m = card_number;
+        
+    printf("numbers %ld\n", m);
+       
+    nd = nd + 1;
+    }
+    while (nd == 13); 
+    
+    
+}
+    
+
