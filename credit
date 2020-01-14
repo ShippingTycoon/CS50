@@ -22,6 +22,8 @@ int main (void)
     long k;
     long l;
     long m;
+    long o;
+    long p;
     
     do
     {
@@ -58,11 +60,97 @@ int main (void)
              card_number = card_number - (l * 10);
         m = card_number;
         
-    printf("numbers %ld\n", m);
+        for (visa = a; visa == 4; visa + 10)
+        {
+            printf("Visa\n");
+        }
+        
+        do
+        {
+            
+        }
        
+        while ((l*2) + (j*2) + (h*2) + (f*2) + (d*2) + (b*2)) = 0;
+            
     nd = nd + 1;
     }
     while (nd == 13); 
+    
+     do
+    {    
+        a = card_number / 100000000000000;
+            card_number = card_number - (a * 100000000000000);
+        b = card_number / 10000000000000;
+             card_number = card_number - (b* 10000000000000);
+        c = card_number / 1000000000000;
+              card_number = card_number - (c * 1000000000000);
+        d = card_number / 100000000000;
+             card_number = card_number - (d * 100000000000);
+        e = card_number / 10000000000;
+             card_number = card_number - (e * 10000000000);
+        f = card_number / 1000000000;
+             card_number = card_number - (f * 1000000000);
+        g = card_number / 100000000;
+             card_number = card_number - (g * 100000000);
+        h = card_number / 10000000;
+             card_number = card_number - (h * 10000000);
+        i = card_number / 1000000;
+             card_number = card_number - (i * 1000000);
+        j = card_number / 100000;
+             card_number = card_number - (j * 100000);
+        k = card_number / 10000;
+             card_number = card_number - (k * 10000);
+        l = card_number / 1000;
+             card_number = card_number - (l * 1000);
+        m = card_number / 100;
+             card_number = card_number - (m * 100);
+        n = card_number / 10;
+             card_number = card_number - (n * 10);
+        o = card_number;
+        
+    nd = nd + 1;
+    }
+    while (nd == 15); 
+    
+       do
+    {    
+        a = card_number / 1000000000000000;
+            card_number = card_number - (a * 1000000000000000);
+        b = card_number / 100000000000000;
+             card_number = card_number - (b* 100000000000000);
+        c = card_number / 10000000000000;
+              card_number = card_number - (c * 10000000000000);
+        d = card_number / 1000000000000;
+             card_number = card_number - (d * 1000000000000);
+        e = card_number / 100000000000;
+             card_number = card_number - (e * 100000000000);
+        f = card_number / 10000000000;
+             card_number = card_number - (f * 10000000000);
+        g = card_number / 1000000000;
+             card_number = card_number - (g * 1000000000);
+        h = card_number / 100000000;
+             card_number = card_number - (h * 100000000);
+        i = card_number / 10000000;
+             card_number = card_number - (i * 10000000);
+        j = card_number / 1000000;
+             card_number = card_number - (j * 1000000);
+        k = card_number / 100000;
+             card_number = card_number - (k * 100000);
+        l = card_number / 10000;
+             card_number = card_number - (l * 10000);
+        m = card_number / 1000;
+             card_number = card_number - (m * 1000);
+        n = card_number / 100;
+             card_number = card_number - (n * 100);
+        o = card_number / 10;
+             card_number = card_number - (o * 10);
+        p = card_number;
+           
+        
+    nd = nd + 1;
+    }
+    while (nd == 16); 
+    
     
     
 }
