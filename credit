@@ -22,8 +22,10 @@ int main (void)
     long k;
     long l;
     long m;
+    long n;
     long o;
     long p;
+    int validity;
     
     do
     {
@@ -60,18 +62,22 @@ int main (void)
              card_number = card_number - (l * 10);
         m = card_number;
         
-        for (visa = a; visa == 4; visa + 10)
+        for (validity = (((l*2)/10) + ((l*2)%10) + ((j*2)/10) + ((j*2)%10) + ((h*2)/10) + ((h*2)%10) + ((f*2)/10) + ((f*2)%10) + ((d*2)/10) + ((d*2)%10) + ((b*2)/10) + ((b*2)%10) + a + c + e + g + i + k + m) % 10; validity != 1; validity =1)
         {
-            printf("Visa\n");
+            printf("INVALID\n");
+          
         }
         
-        do
+        visa = a;
+        validity = validity +1;
+        
+     do 
         {
-            printf("INVALID\n")
+            printf("Visa\n");
+             visa = visa + 1;
         }
-       
-        while ((((l*2)/10) + ((l*2)%10) + ((j*2)/10)) + ((j*2)%10) + ((h*2)/10) + ((h*2)%10) + ((f*2)/10) + ((f*2)%10) + ((d*2)/10) + ((d*2)%10) + ((b*2)/10) + ((b*2)%10) + a + c + e + g + i + k + m) mod10) != 0;
-            
+        while (visa == 4 & validity == 1);
+        
     nd = nd + 1;
     }
     while (nd == 13); 
