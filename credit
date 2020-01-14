@@ -62,21 +62,17 @@ int main (void)
              card_number = card_number - (l * 10);
         m = card_number;
         
-        for (validity = (((l*2)/10) + ((l*2)%10) + ((j*2)/10) + ((j*2)%10) + ((h*2)/10) + ((h*2)%10) + ((f*2)/10) + ((f*2)%10) + ((d*2)/10) + ((d*2)%10) + ((b*2)/10) + ((b*2)%10) + a + c + e + g + i + k + m) % 10; validity != 1; validity =1)
+        if (((((l*2)/10) + ((l*2)%10) + ((j*2)/10) + ((j*2)%10) + ((h*2)/10) + ((h*2)%10) + ((f*2)/10) + ((f*2)%10) + ((d*2)/10) + ((d*2)%10) + ((b*2)/10) + ((b*2)%10) + a + c + e + g + i + k + m) % 10) == 0)
         {
-            printf("INVALID\n");
+            printf("VISA\n");
           
         }
-        
-        visa = a;
-        validity = validity +1;
-        
-     do 
+        else 
+         
         {
-            printf("Visa\n");
-             visa = visa + 1;
+            printf("INVALID\n");
+             
         }
-        while (visa == 4 & validity == 1);
         
     nd = nd + 1;
     }
