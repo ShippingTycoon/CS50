@@ -62,6 +62,8 @@ int main (void)
              card_number = card_number - (l * 10);
         m = card_number;
         
+        
+        
         if (((((l*2)/10) + ((l*2)%10) + ((j*2)/10) + ((j*2)%10) + ((h*2)/10) + ((h*2)%10) + ((f*2)/10) + ((f*2)%10) + ((d*2)/10) + ((d*2)%10) + ((b*2)/10) + ((b*2)%10) + a + c + e + g + i + k + m) % 10) == 0)
         {
             printf("VISA\n");
@@ -70,7 +72,8 @@ int main (void)
         else 
          
         {
-            printf("INVALID\n");
+            validity = ((((l*2)/10) + ((l*2)%10) + ((j*2)/10) + ((j*2)%10) + ((h*2)/10) + ((h*2)%10) + ((f*2)/10) + ((f*2)%10) + ((d*2)/10) + ((d*2)%10) + ((b*2)/10) + ((b*2)%10) + a + c + e + g + i + k + m) % 10);
+            printf("INVALID %i\n", validity);
              
         }
         
