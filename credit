@@ -26,6 +26,7 @@ int main (void)
     long o;
     long p;
     int validity;
+    long thing;
     
     do
     {
@@ -34,32 +35,45 @@ int main (void)
         }
     while (card_number <= 0 || nd < 13 || nd == 14 || nd > 16);
     
-    do
+    thing = pow(10, (nd-1));
+    
+    if (nd == 13)
     {    
-        a = card_number / 1000000000000;
-            card_number = card_number - (a * 1000000000000);
-        b = card_number / 100000000000;
-             card_number = card_number - (b* 100000000000);
-        c = card_number / 10000000000;
-              card_number = card_number - (c * 10000000000);
-        d = card_number / 1000000000;
-             card_number = card_number - (d * 1000000000);
-        e = card_number / 100000000;
-             card_number = card_number - (e * 100000000);
-        f = card_number / 10000000;
-             card_number = card_number - (f * 10000000);
-        g = card_number / 1000000;
-             card_number = card_number - (g * 1000000);
-        h = card_number / 100000;
-             card_number = card_number - (h * 100000);
-        i = card_number / 10000;
-             card_number = card_number - (i * 10000);
-        j = card_number / 1000;
-             card_number = card_number - (j * 1000);
-        k = card_number / 100;
-             card_number = card_number - (k * 100);
-        l = card_number / 10;
-             card_number = card_number - (l * 10);
+        a = card_number / thing;
+            card_number = card_number - (a * thing);
+            thing = thing/10;
+        b = card_number / (thing);
+             card_number = card_number - (b* thing);
+             thing = thing/10;
+        c = card_number / thing;
+              card_number = card_number - (c * thing);
+        thing = thing/10;
+        d = card_number / thing;
+             card_number = card_number - (d * thing);
+        thing = thing/10;
+        e = card_number / thing;
+             card_number = card_number - (e * thing);
+        thing = thing/10;
+        f = card_number / thing;
+             card_number = card_number - (f * thing);
+        thing = thing/10;
+        g = card_number / thing;
+             card_number = card_number - (g * thing);
+        thing = thing/10;
+        h = card_number / thing;
+             card_number = card_number - (h * thing);
+        thing = thing/10;
+        i = card_number / thing;
+             card_number = card_number - (i * thing);
+        thing = thing/10;
+        j = card_number / thing;
+             card_number = card_number - (j * thing);
+        thing = thing/10;
+        k = card_number / thing;
+             card_number = card_number - (k * thing);
+        thing = thing/10;
+        l = card_number / thing;
+             card_number = card_number - (l * thing);
         m = card_number;
         
         
@@ -73,88 +87,138 @@ int main (void)
          
         {
             validity = ((((l*2)/10) + ((l*2)%10) + ((j*2)/10) + ((j*2)%10) + ((h*2)/10) + ((h*2)%10) + ((f*2)/10) + ((f*2)%10) + ((d*2)/10) + ((d*2)%10) + ((b*2)/10) + ((b*2)%10) + a + c + e + g + i + k + m) % 10);
+            printf("INVALID %i\n", nd);
+             
+        }
+        
+    }
+  
+    
+     else if (nd == 15)
+    {    
+        a = card_number / thing;
+            card_number = card_number - (a * thing);
+            thing = thing/10;
+        b = card_number / (thing);
+             card_number = card_number - (b* thing);
+             thing = thing/10;
+        c = card_number / thing;
+              card_number = card_number - (c * thing);
+        thing = thing/10;
+        d = card_number / thing;
+             card_number = card_number - (d * thing);
+        thing = thing/10;
+        e = card_number / thing;
+             card_number = card_number - (e * thing);
+        thing = thing/10;
+        f = card_number / thing;
+             card_number = card_number - (f * thing);
+        thing = thing/10;
+        g = card_number / thing;
+             card_number = card_number - (g * thing);
+        thing = thing/10;
+        h = card_number / thing;
+             card_number = card_number - (h * thing);
+        thing = thing/10;
+        i = card_number / thing;
+             card_number = card_number - (i * thing);
+        thing = thing/10;
+        j = card_number / thing;
+             card_number = card_number - (j * thing);
+        thing = thing/10;
+        k = card_number / thing;
+             card_number = card_number - (k * thing);
+        thing = thing/10;
+        l = card_number / thing;
+             card_number = card_number - (l * thing);
+           thing = thing/10;
+        m = card_number / thing;
+             card_number = card_number - (m * thing);
+           thing = thing/10;
+        n = card_number / thing;
+             card_number = card_number - (n * thing);
+           thing = thing/10;
+        o = card_number / thing;
+         
+         if (((((n*2)/10) + ((n*2)%10) + ((l*2)/10) + ((l*2)%10) + ((j*2)/10) + ((j*2)%10) + ((h*2)/10) + ((h*2)%10) + ((f*2)/10) + ((f*2)%10) + ((d*2)/10) + ((d*2)%10) + ((b*2)/10) + ((b*2)%10) + a + c + e + g + i + k + m + o) % 10) == 0)
+        {
+            printf("VISA\n");
+          
+        }
+        else 
+         
+        {
+            validity = ((((n*2)/10) + ((n*2)%10) + ((l*2)/10) + ((l*2)%10) + ((j*2)/10) + ((j*2)%10) + ((h*2)/10) + ((h*2)%10) + ((f*2)/10) + ((f*2)%10) + ((d*2)/10) + ((d*2)%10) + ((b*2)/10) + ((b*2)%10) + a + c + e + g + i + k + m + o) % 10);
+            printf("INVALID\n");
+             
+        }
+        
+    }
+    
+    
+       else if (nd == 16)
+    {    
+       a = card_number / thing;
+            card_number = card_number - (a * thing);
+            thing = thing/10;
+        b = card_number / (thing);
+             card_number = card_number - (b* thing);
+             thing = thing/10;
+        c = card_number / thing;
+              card_number = card_number - (c * thing);
+        thing = thing/10;
+        d = card_number / thing;
+             card_number = card_number - (d * thing);
+        thing = thing/10;
+        e = card_number / thing;
+             card_number = card_number - (e * thing);
+        thing = thing/10;
+        f = card_number / thing;
+             card_number = card_number - (f * thing);
+        thing = thing/10;
+        g = card_number / thing;
+             card_number = card_number - (g * thing);
+        thing = thing/10;
+        h = card_number / thing;
+             card_number = card_number - (h * thing);
+        thing = thing/10;
+        i = card_number / thing;
+             card_number = card_number - (i * thing);
+        thing = thing/10;
+        j = card_number / thing;
+             card_number = card_number - (j * thing);
+        thing = thing/10;
+        k = card_number / thing;
+             card_number = card_number - (k * thing);
+        thing = thing/10;
+        l = card_number / thing;
+             card_number = card_number - (l * thing);
+           thing = thing/10;
+        m = card_number / thing;
+             card_number = card_number - (m * thing);
+           thing = thing/10;
+        n = card_number / thing;
+             card_number = card_number - (n * thing);
+           thing = thing/10;
+        o = card_number / thing;
+             card_number = card_number - (o * thing);
+        p = card_number;
+           
+           if (((((o*2)/10) + ((o*2)%10) + ((m*2)/10) + ((m*2)%10) + ((k*2)/10) + ((k*2)%10) + ((i*2)/10) + ((i*2)%10) + ((g*2)/10) + ((g*2)%10) + ((e*2)/10) + ((e*2)%10) + ((c*2)/10) + ((c*2)%10) + ((a*2)/10) + ((a*2)%10) + b + d + f + h + j + l + n + p) % 10) == 0)
+        {
+            printf("VISA\n");
+          
+        }
+        else 
+         
+        {
+            validity = ((((o*2)/10) + ((o*2)%10) + ((m*2)/10) + ((m*2)%10) + ((k*2)/10) + ((k*2)%10) + ((i*2)/10) + ((i*2)%10) + ((g*2)/10) + ((g*2)%10) + ((e*2)/10) + ((e*2)%10) + ((c*2)/10) + ((c*2)%10) + ((a*2)/10) + ((a*2)%10) + b + d + f + h + j + l + n + p) % 10);
             printf("INVALID %i\n", validity);
              
         }
         
-    nd = nd + 1;
     }
-    while (nd == 13); 
     
-     do
-    {    
-        a = card_number / 100000000000000;
-            card_number = card_number - (a * 100000000000000);
-        b = card_number / 10000000000000;
-             card_number = card_number - (b* 10000000000000);
-        c = card_number / 1000000000000;
-              card_number = card_number - (c * 1000000000000);
-        d = card_number / 100000000000;
-             card_number = card_number - (d * 100000000000);
-        e = card_number / 10000000000;
-             card_number = card_number - (e * 10000000000);
-        f = card_number / 1000000000;
-             card_number = card_number - (f * 1000000000);
-        g = card_number / 100000000;
-             card_number = card_number - (g * 100000000);
-        h = card_number / 10000000;
-             card_number = card_number - (h * 10000000);
-        i = card_number / 1000000;
-             card_number = card_number - (i * 1000000);
-        j = card_number / 100000;
-             card_number = card_number - (j * 100000);
-        k = card_number / 10000;
-             card_number = card_number - (k * 10000);
-        l = card_number / 1000;
-             card_number = card_number - (l * 1000);
-        m = card_number / 100;
-             card_number = card_number - (m * 100);
-        n = card_number / 10;
-             card_number = card_number - (n * 10);
-        o = card_number;
-        
-    nd = nd + 1;
-    }
-    while (nd == 15); 
-    
-       do
-    {    
-        a = card_number / 1000000000000000;
-            card_number = card_number - (a * 1000000000000000);
-        b = card_number / 100000000000000;
-             card_number = card_number - (b* 100000000000000);
-        c = card_number / 10000000000000;
-              card_number = card_number - (c * 10000000000000);
-        d = card_number / 1000000000000;
-             card_number = card_number - (d * 1000000000000);
-        e = card_number / 100000000000;
-             card_number = card_number - (e * 100000000000);
-        f = card_number / 10000000000;
-             card_number = card_number - (f * 10000000000);
-        g = card_number / 1000000000;
-             card_number = card_number - (g * 1000000000);
-        h = card_number / 100000000;
-             card_number = card_number - (h * 100000000);
-        i = card_number / 10000000;
-             card_number = card_number - (i * 10000000);
-        j = card_number / 1000000;
-             card_number = card_number - (j * 1000000);
-        k = card_number / 100000;
-             card_number = card_number - (k * 100000);
-        l = card_number / 10000;
-             card_number = card_number - (l * 10000);
-        m = card_number / 1000;
-             card_number = card_number - (m * 1000);
-        n = card_number / 100;
-             card_number = card_number - (n * 100);
-        o = card_number / 10;
-             card_number = card_number - (o * 10);
-        p = card_number;
-           
-        
-    nd = nd + 1;
-    }
-    while (nd == 16); 
     
     
     
