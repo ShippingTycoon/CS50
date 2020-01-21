@@ -1,0 +1,39 @@
+include <stdio.h>
+include <cs50.h>
+include <math.h>
+
+int main (void)
+{
+    string text = get_string("Text: ");
+
+    float i = 0;
+    float letters = 0;
+    float words = 0;
+    float scentences = 0;
+
+    do //counting the number of letters and words and scentences
+    {
+        if string[i] == isalnum
+        {
+            letters ++;
+        }
+        else if string[i] == " "
+        {
+            words ++;
+        }
+        else if string[i] == "."
+        {
+            scentences ++;
+        }
+        i ++;
+    }
+    while i != "\0"
+
+    float L = letters / words * (100 / words);
+
+    float S = scentences / words * (100 / words);
+
+    int grade = 0.0588 * L - 0.296 * S - 15.8; //L is the average number of letters per 100 words in the text, S is the average number of scentences per 100 words
+
+    Printf("Grade %i\n", grade);
+}
