@@ -19,21 +19,22 @@ int main (void)
         {
             letters ++;
         }
-        else if (text[i] == ' ')
-        {
-            words ++;
-        }
         else if (text[i] == '.')
         {
             scentences ++;
+            words ++;
+        }
+        else if (text[i] == ' ' && ((text[i - 1] >= 'a' && text[i - 1] <= 'z') || (text[i - 1] >= 'A' && text[i - 1] <= 'Z'))) || ((text[i] == ',' || text[i] == '!' || text[i] == '?' || text[i] == ':' || text[i] == ';' || text[i] == '*' || text[i] == '/' || text[i] == ')' || text[i] == '"'))
+        {
+            words ++;
         }
     }
 
-    float L = (letters / words * (100 / words));
+    float L = ((letters / words) * (100 / words));
 
-    float S = (scentences / words * (100 / words));
+    float S = ((scentences / words) * (100 / words));
 
     int grade = (0.0588 * L - 0.296 * S - 15.8); //L is the average number of letters per 100 words in the text, S is the average number of scentences per 100 words
 
-    printf("Grade %i\n", grade);
+    printf("Grade %i %f %f\n", grade, letters, words);
 }
