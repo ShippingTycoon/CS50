@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <cs50.h>
+
+int main(int argc, string argv[])
+{
+    if (argv[1] > 0)//checks if the user has specified the cypher key in the command prompt
+    {//need to check if the user isn't cooperating
+
+    int k = argc;
+
+    string p = get_string("plaintext: ");
+    printf("cyphertext: ");
+
+    for (int i = 0; p[i] != '\0'; i ++)
+    {
+       char c = (p[i] + k) % 26; //alphabet needs to be set to numerical value, could use value of i?
+        printf("%c", c);//need to impliment code to keep letters case sensitive
+    }}
+
+    else if (argv[1] <= 0)
+    {
+        printf("Missing command-line argument\n");
+        return 1;
+    }
+    printf("\n");
+    return 0;
+}
