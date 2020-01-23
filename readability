@@ -19,7 +19,7 @@ int main (void)
         {
             letters ++;
         }
-        else if (text[i] == '.' || text[i] == '!' || text[i] == '?' || text[i] == ':' || text[i] == ';')
+        else if (text[i] == '.' || text[i] == '!' || text[i] == '?')
         {
             scentences ++;
             words ++;
@@ -36,5 +36,16 @@ int main (void)
 
     int grade = (0.0588 * L - 0.296 * S - 15.8) + 0.5; //L is the average number of letters per 100 words in the text, S is the average number of scentences per 100 words
 
-    printf("Grade %i\n", grade);
+    if (grade >= 1 && grade < 16)
+    {
+        printf("Grade %i\n", grade);
+    }
+    else if (grade < 1)
+    {
+        printf("Before grade 1\n");
+    }
+    else if (grade >= 16)
+    {
+        printf("Grade 16+\n");
+    }
 }
