@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <cs50.h>
 
+char alphalower[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+char alphaupper[26] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+
 int main(int argc, string argv[])
 {
     if (argv[1] > 0)//checks if the user has specified the cypher key in the command prompt
@@ -11,10 +14,19 @@ int main(int argc, string argv[])
     string p = get_string("plaintext: ");
     printf("cyphertext: ");
 
+char c;
+int n;
+
     for (int i = 0; p[i] != '\0'; i ++)
     {
-       char c = (p[i] + k) % 26; //alphabet needs to be set to numerical value, could use value of i?
-        printf("%c", c);//need to impliment code to keep letters case sensitive
+
+        for (n = 0; c == alphalower[n] || c == alphaupper[n]; n ++)
+        {
+            c = p[i];
+        }
+
+        c = alphalower[(n + k)]; //alphabet needs to be set to numerical value, could use value of i?
+        printf("%c", c);//need to impliment code to keep letters case sen sitive
     }}
 
     else if (argv[1] <= 0)
