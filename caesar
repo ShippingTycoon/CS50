@@ -9,23 +9,27 @@ int main(int argc, string argv[])
     if (argv[1] > 0)//checks if the user has specified the cypher key in the command prompt
     {//need to check if the user isn't cooperating
 
-    int k = argc;
+    int k = (argc + 1);
 
-    string p = get_string("plaintext: ");
-    printf("cyphertext: ");
+    string p = get_string("plaintext: ");// asks user for plaintext
+    printf("cyphertext: ");// begins output
 
-char c;
-int n;
-
-    for (int i = 0; p[i] != '\0'; i ++)
+    for (int i = 0; p[i] != '\0'; i ++)//runs through chars in p until end of string
     {
-
-        for (n = 0; c == alphalower[n] || c == alphaupper[n]; n ++)
+        int position;//makes variable position available to whole loop
+        for (int n = 0; alphalower[n] != p[i] && alphaupper[n] != p[i]; n++)//runs through alphalower & upper checking for match with current position in p
         {
-            c = p[i];
+            position = (n + k + 1) % 26;
         }
 
-        c = alphalower[(n + k)]; //alphabet needs to be set to numerical value, could use value of i?
+        if (p[i] == 'a' || p[i] == 'A')
+        {
+            position = k % 26;
+        }
+
+        char c = alphalower[position];
+
+
         printf("%c", c);//need to impliment code to keep letters case sen sitive
     }}
 
