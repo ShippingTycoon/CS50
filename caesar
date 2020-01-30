@@ -6,23 +6,55 @@ char alphaupper[26] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','
 
 int main(int argc, string argv[])
 {
-    if (argv[1] > 0)//checks if the user has specified the cypher key in the command prompt
+    if (argc == 2)//checks if the user has specified the cypher key in the command prompt
     {//need to check if the user isn't cooperating
 
-    int k = (argc + 1);
+    int k = argv[1] % 26;
 
     string p = get_string("plaintext: ");// asks user for plaintext
     printf("cyphertext: ");// begins output
 
     for (int i = 0; p[i] != '\0'; i ++)//runs through chars in p until end of string
     {
-        int position;//makes variable position available to whole loop
-        for (int n = 0; alphalower[n] != p[i] && alphaupper[n] != p[i]; n++)//runs through alphalower & upper checking for match with current position in p
+        int loop = 0;
+        
+        char c;
+        
+        if (p[i] >= 'a' && p[i] <= 'z')
+        {
+            
+            c = p[i] + k;
+            
+            for (c = p[i] + k; c > 'z'; c--)
+            {
+                loop ++;
+                
+                c = 'a' + loop;
+            }
+            
+            printf("%c", c);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        int position = 0;//makes variable position available to whole loop
+        for (int n = 0; alphalower[n] != p[i] && alphaupper[n] != p[i]; n++)
+        //runs through alphalower & upper checking for match with current position in p
         {
             position = (n + k + 1) % 26;
         }
 
         if (p[i] == 'a' || p[i] == 'A')
+        //makes sure that values a and A are accounted for fixing bug in previous loop
         {
             position = k % 26;
         }
@@ -30,7 +62,7 @@ int main(int argc, string argv[])
         char c = alphalower[position];
 
 
-        printf("%c", c);//need to impliment code to keep letters case sen sitive
+        printf("%c", c);//need to impliment code to keep letters case sensitive
     }}
 
     else if (argv[1] <= 0)
