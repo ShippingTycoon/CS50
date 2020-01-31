@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <cs50.h>
+#include <stdlib.h>
 
 char alphalower[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 char alphaupper[26] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
@@ -9,67 +10,49 @@ int main(int argc, string argv[])
     if (argc == 2)//checks if the user has specified the cypher key in the command prompt
     {//need to check if the user isn't cooperating
 
-    int k = argv[1] % 26;
+        string key = (argv[1]);
+        int k = atoi(key);
 
     string p = get_string("plaintext: ");// asks user for plaintext
     printf("cyphertext: ");// begins output
 
     for (int i = 0; p[i] != '\0'; i ++)//runs through chars in p until end of string
     {
-        int loop = 0;
-        
-        char c;
-        
+        int c;
+        char ct;
+        int r = 1;
         if (p[i] >= 'a' && p[i] <= 'z')
         {
-            
-            c = p[i] + k;
-            
-            for (c = p[i] + k; c > 'z'; c--)
+            c = (p[i] + k);
+            if (c > 'z')
             {
-                loop ++;
-                
-                c = 'a' + loop;
+                r = (c - 122) % 26;
+                ct = 'a' + (r - 1);
             }
-            
-            printf("%c", c);
+            else
+            {
+                ct = (p[i] + k);
+            }
+
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        int position = 0;//makes variable position available to whole loop
-        for (int n = 0; alphalower[n] != p[i] && alphaupper[n] != p[i]; n++)
-        //runs through alphalower & upper checking for match with current position in p
+        if (p[i] >= 'A' && p[i] <= 'Z')
         {
-            position = (n + k + 1) % 26;
+            do
+            {
+                c = (p[i] + k);
+                k = k - (p[i] + k - 'Z');
+
+            }
+            while (c > 'Z');
         }
-
-        if (p[i] == 'a' || p[i] == 'A')
-        //makes sure that values a and A are accounted for fixing bug in previous loop
-        {
-            position = k % 26;
-        }
-
-        char c = alphalower[position];
-
-
-        printf("%c", c);//need to impliment code to keep letters case sensitive
-    }}
-
-    else if (argv[1] <= 0)
+        printf("%c", ct);
+        k = atoi(key);
+    }
+    if (argv[1] <= 0)
     {
         printf("Missing command-line argument\n");
         return 1;
     }
     printf("\n");
     return 0;
-}
+}}
