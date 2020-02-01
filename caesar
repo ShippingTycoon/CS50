@@ -35,7 +35,7 @@ int main(int argc, string argv[])
 
 
     string p = get_string("plaintext: ");// asks user for plaintext
-    printf("cyphertext: ");// begins output
+    printf("ciphertext: ");// begins output
 
     //run through chars in p until end of string
     for (int i = 0; p[i] != '\0'; i ++)
