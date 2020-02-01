@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-int main (int argc, string argv[])
+int main(int argc, string argv[])
 {
     string key = argv[1];
     string alpha = "abcdefghijklmnopqrstuvwxyz";
@@ -23,7 +23,7 @@ int main (int argc, string argv[])
             {
                 for (int b = -1; key[b + (strlen(key) - a + 2)] != '\0'; b ++)
                 {
-                    if (key[a] == key[b])
+                    if (key[a] == toupper(key[b]) || key[a] == tolower(key[b]))
                     {
                         printf("Invalid command line argument\n");
                         return 1;
@@ -32,13 +32,21 @@ int main (int argc, string argv[])
             }
 
         }
+        else
+        {
+            printf("Invalid command line argument\n");
+            return 1;
+        }
     }
-    if (strlen(key) < 0)
+    if (strlen(key) != 26)
     {
         printf("Invalid command line argument\n");
         return 1;
     }
-    string p = get_string("Plaintext: ");
+    //get user input
+    string p = get_string("plaintext: ");
+    //start printing ciphertext
+    printf("ciphertext: ");
     for (int i = 0; p[i] != '\0'; i++)
     {
         if (p[i] >= 'a' && p[i] <= 'z')
@@ -63,7 +71,7 @@ int main (int argc, string argv[])
         }
         else
         {
-            printf ("%c", p[i]);
+            printf("%c", p[i]);
         }
     }
     printf("\n");
