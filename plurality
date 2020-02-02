@@ -72,14 +72,14 @@ int main(int argc, string argv[])
 // Update vote totals given a new vote
 bool vote(string name)
 {
-     for(int i = 0; i < candidate_count; i++)
-            {
-                if(strcmp(name, candidates[i].name) == 0)
-                {
-                    candidates[i].votes ++;
-                    return true;
-                }
-            }
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (strcmp(name, candidates[i].name) == 0)
+        {
+            candidates[i].votes ++;
+            return true;
+        }
+    }
     // TODO
     return false;
 }
@@ -89,26 +89,26 @@ void print_winner(void)
 {
     winners[0] = candidates[0].name;
     //going through candidates
-    for(int i = 1; i < candidate_count; i++)
+    for (int i = 1; i < candidate_count; i++)
     {
         //find the highest scorer
-        if(candidates[i].votes > candidates[i - 1].votes)
+        if (candidates[i].votes > candidates[i - 1].votes)
         {
             winners[0] = candidates[i].name;
             winner_position = i;
         }
     }
     int n = 0;
-    for(int i = 0; i < candidate_count; i++)
+    for (int i = 0; i < candidate_count; i++)
     {
         //check for any ties. just comparing names right now - need to compare scores
-        if(candidates[i].votes == candidates[winner_position].votes)
+        if (candidates[i].votes == candidates[winner_position].votes)
         {
             winners[n] = candidates[i].name;
             n++;
         }
     }
-    for(int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         printf("%s\n", winners[i]);
     }
