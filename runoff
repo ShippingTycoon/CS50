@@ -1,5 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
+#include <string.h>
 
 // Max voters and candidates
 #define MAX_VOTERS 100
@@ -129,28 +130,25 @@ int main(int argc, string argv[])
 bool vote(int voter, int rank, string name)
 {
     //j = rank
-    if (j < candidate_count)
+    if (rank < candidate_count)
     {
         //working through candidates
         for (int k = 0; k < candidate_count; k ++)
         {
             //k is position in candidate struct
-            if (strcmp(name, candidates[k].name) = 0)
+            if (!strcmp(name, candidates[k].name))
             {
                 //sets voter i, position j to numerical value of k
                 //meaning the candidate represented by integer k
                 //as a key to find in candidates struct
                 //can be accessed as a ranking by using position j when searching preferences
                 //j=0 would be rank 1 etc...
-                preferences[i][j] = k;
+                preferences[voter][rank] = k;
                 return true;
             }
         }
     }
-    else
-    {
-        return false;
-    }
+return false;
 }
 
 // Tabulate votes for non-eliminated candidates
@@ -158,14 +156,19 @@ void tabulate(void)
 {
     for (int i = 0; i < voter_count; i++)
     {
-        for (int k = 0; k < candidate_count; k++)
+        for (int j = 0; j < candidate_count; j++)
         {
-            if (preferences[i][0] == k && candidates[k].eliminated == false)
+            for (int k = 0; k < candidate_count; k++)
             {
-                candidates[k].votes ++;
+                if (preferences[i][j] == k && candidates[k].eliminated == false)
+                {
+                    candidates[k].votes ++;
+                    k = candidate_count;
+                    j = candidate_count;
+                }
             }
-        }
 
+        }
     }
     return;
 }
@@ -178,26 +181,23 @@ bool print_winner(void)
         if(candidates[i].votes > (voter_count / 2))
         {
             printf("%s\n", candidates[i].name);
-            return true
+            return true;
         }
     }
-    else
-    {
-        return false;
-    }
+return false;
 }
 
 // Return the minimum number of votes any remaining candidate has
 int find_min(void)
 {
-    int min = 0;
-    for (int i = 0; i < candidate_count; i++)
+    int min = candidates[0].votes;
+    for (int i = 1; i < candidate_count; i++)
     {
         if (candidates[i].eliminated == false)
         {
-            if (candidates[i + 1].scores < candidates[i].scores)
+            if (candidates[i].votes < candidates[i - 1].votes)
             {
-                min = candidates[i + 1].scores;
+                min = candidates[i].votes;
             }
         }
     }
@@ -209,9 +209,12 @@ bool is_tie(int min)
 {
     for (int i = 0; i < candidate_count; i++)
     {
-        if (candidates[i].scores != min)
+        if (candidates[i].eliminated == false)
         {
+            if (candidates[i].votes != min)
+            {
             return false;
+            }
         }
     }
     return true;
@@ -220,6 +223,12 @@ bool is_tie(int min)
 // Eliminate the candidate (or candidiates) in last place
 void eliminate(int min)
 {
-candidates[min].eliminated = true;
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].votes == min)
+        {
+            candidates[i].eliminated = true;
+        }
+    }
     return;
 }
