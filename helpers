@@ -39,13 +39,15 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
-    int avgb = 0;
-    int avgg = 0;
-    int avgr = 0;
     for (int i = 0; i < height; i ++)
     {
         for (int j = 0; j < width; j ++)
         {
+
+            float avgb = 0;
+            float avgg = 0;
+            float avgr = 0;
+
             if (i == 0 && j == 0)
             {
                 for (int k = i; k <= (i + 1); k ++)
@@ -144,24 +146,24 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     }
                 }
             }
-            else
+            else if (i > 0 && i < (height - 1) && j > 0 && j < (width - 1))
             {
                for(int k = (i - 1); k <= (i + 1); k ++)
                {
-                   for (int l = (j - 1); l <= (j + 1); l ++)
+                   for (int l = (j - 1); l <= (j + 1); l ++)s
                    {
                        avgb = avgb + image[k][l].rgbtBlue;
                        avgg = avgg + image[k][l].rgbtGreen;
                        avgr = avgr + image[k][l].rgbtRed;
                    }
                }
-               avgb = avgb / 9;
-               avgg = avgg / 9;
-               avgr = avgr / 9;
             }
-            image[i][j].rgbtBlue = avgb;
-            image[i][j].rgbtGreen = avgg;
-            image[i][j].rgbtRed = avgr;
+            avgb = avgb / 9;
+            avgg = avgg / 9;
+            avgr = avgr / 9;
+            image[i][j].rgbtBlue = (int)(avgb + 0.5);
+            image[i][j].rgbtGreen = (int)(avgg + 0.5);
+            image[i][j].rgbtRed = (int)(avgr + 0.5);
         }
     }
     return;
