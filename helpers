@@ -46,37 +46,103 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int j = 0; j < width; j ++)
         {
-            if (i = 0 && j = 0)
+            if (i == 0 && j == 0)
+            {
+                for (int k = i; k <= (i + 1); k ++)
+                {
+                    for (int l = j; l <= (j + 1); l ++)
+                    {
+                       avgb = avgb + image[k][l].rgbtBlue;
+                       avgg = avgg + image[k][l].rgbtGreen;
+                       avgr = avgr + image[k][l].rgbtRed;
+                    }
+                }
+            }
+            if (i == 0 && j == (width - 1))
+            {
+                for (int k = i; k <= (i + 1); k ++)
+                {
+                    for (int l = (j - 1); l <= j; l ++)
+                    {
+                       avgb = avgb + image[k][l].rgbtBlue;
+                       avgg = avgg + image[k][l].rgbtGreen;
+                       avgr = avgr + image[k][l].rgbtRed;
+                    }
+                }
+
+            }
+            if (i == (height - 1) && j == (width - 1))
+            {
+                for (int k = (i - 1); k <= i; k ++)
+                {
+                    for (int l = (j - 1); l <= j; l ++)
+                    {
+                       avgb = avgb + image[k][l].rgbtBlue;
+                       avgg = avgg + image[k][l].rgbtGreen;
+                       avgr = avgr + image[k][l].rgbtRed;
+                    }
+                }
+            }
+            if (i == (height - 1) && j == 0)
+            {
+                for (int k = (i - 1); k <= i; k ++)
+                {
+                    for (int l = j; l <= (j + 1); l ++)
+                    {
+                       avgb = avgb + image[k][l].rgbtBlue;
+                       avgg = avgg + image[k][l].rgbtGreen;
+                       avgr = avgr + image[k][l].rgbtRed;
+                    }
+                }
+            }
+            if (i == 0 && j >= 1 && j <= (width - 2))
+            for (int k = i; k <= (i + 1); k ++)
+                {
+                    for (int l = (j - 1); l <= (j + 1); l ++)
+                    {
+                       avgb = avgb + image[k][l].rgbtBlue;
+                       avgg = avgg + image[k][l].rgbtGreen;
+                       avgr = avgr + image[k][l].rgbtRed;
+                    }
+                }
             {
 
             }
-            if (i = 0 && j = (width - 1))
+            if (i == (height - 1) && j >= 1 && j <= (width - 2))
             {
-
+                for (int k = (i - 1); k <= i; k ++)
+                {
+                    for (int l = (j - 1); l <= (j + 1); l ++)
+                    {
+                       avgb = avgb + image[k][l].rgbtBlue;
+                       avgg = avgg + image[k][l].rgbtGreen;
+                       avgr = avgr + image[k][l].rgbtRed;
+                    }
+                }
             }
-            if (i = (height - 1) && j = (width - 1))
+            if (j == 0 && i >= 1 && i <= (height - 2))
             {
-
+                for (int k = (i - 1); k <= (i + 1); k ++)
+                {
+                    for (int l = j; l <= (j + 1); l ++)
+                    {
+                       avgb = avgb + image[k][l].rgbtBlue;
+                       avgg = avgg + image[k][l].rgbtGreen;
+                       avgr = avgr + image[k][l].rgbtRed;
+                    }
+                }
             }
-            if (i = (height - 1) && j = 0)
+            if (j == (width - 1) && i >= 1 && i <= (height - 2))
             {
-
-            }
-            if (i = 0)
-            {
-
-            }
-            if (i = (height - 1))
-            {
-
-            }
-            if (j = 0)
-            {
-
-            }
-            if (j = (width - 1))
-            {
-
+                for (int k = (i - 1); k <= (i + 1); k ++)
+                {
+                    for (int l = (j - 1); l <= j; l ++)
+                    {
+                       avgb = avgb + image[k][l].rgbtBlue;
+                       avgg = avgg + image[k][l].rgbtGreen;
+                       avgr = avgr + image[k][l].rgbtRed;
+                    }
+                }
             }
             else
             {
@@ -86,7 +152,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                    {
                        avgb = avgb + image[k][l].rgbtBlue;
                        avgg = avgg + image[k][l].rgbtGreen;
-                       avgr = avgr + image[k][l].rgbtR;
+                       avgr = avgr + image[k][l].rgbtRed;
                    }
                }
                avgb = avgb / 9;
