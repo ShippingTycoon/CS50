@@ -1,0 +1,167 @@
+#include "helpers.h"
+
+// Convert image to grayscale
+void grayscale(int height, int width, RGBTRIPLE image[height][width])
+{
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            float blue = image[i][j].rgbtBlue;
+            float green = image[i][j].rgbtGreen;
+            float red = image[i][j].rgbtRed;
+            float average = ((blue + green + red) / 3) + 0.5;
+            int av = (int) average;
+            image[i][j].rgbtBlue = av;
+            image[i][j].rgbtGreen = av;
+            image[i][j].rgbtRed = av;
+        }
+    }
+    return;
+}
+
+// Convert image to sepia
+void sepia(int height, int width, RGBTRIPLE image[height][width])
+{
+    for (int i = 0; i < height; i ++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            float orig_red = image[i][j].rgbtRed;
+            float orig_green = image[i][j].rgbtGreen;
+            float orig_blue = image[i][j].rgbtBlue;
+
+            float sepiared = ((0.393 * orig_red) + (0.769 * orig_green) + (0.189 * orig_blue) + 0.5);
+            float sepiagreen = ((0.349 * orig_red) + (0.686 * orig_green) + (0.168 * orig_blue) + 0.5);
+            float sepiablue = ((0.272 * orig_red) + (0.534 * orig_green) + (0.131 * orig_blue) + 0.5);
+            if (sepiared <= 255)
+            {
+                image[i][j].rgbtRed = (int)sepiared;
+            }
+            else
+            {
+                image[i][j].rgbtRed = 255;
+            }
+            if (sepiagreen <= 255)
+            {
+                image[i][j].rgbtGreen = sepiagreen;
+            }
+            else
+            {
+                image[i][j].rgbtGreen = 255;
+            }
+            if (sepiablue <= 255)
+            {
+                image[i][j].rgbtBlue = sepiablue;
+            }
+            else
+            {
+                image[i][j].rgbtBlue = 255;
+            }
+        }
+    }
+    return;
+}
+
+// Reflect image horizontally
+void reflect(int height, int width, RGBTRIPLE image[height][width])
+{
+        for (int i = 0; i < height; i ++)
+    {
+        for (int j = 0; j < (width / 2); j ++)
+        {
+            int temp[3] = {image[i][j].rgbtBlue, image[i][j].rgbtGreen, image[i][j].rgbtRed};
+            image[i][j].rgbtBlue = image[i][width - 1 - j].rgbtBlue;
+            image[i][j].rgbtGreen = image[i][width - 1 - j].rgbtGreen;
+            image[i][j].rgbtRed = image[i][width - 1 - j].rgbtRed;
+            image[i][width - 1 - j].rgbtBlue = temp[0];
+            image[i][width - 1 - j].rgbtGreen = temp[1];
+            image[i][width - 1 - j].rgbtRed = temp[2];
+        }
+    }
+    return;
+}
+
+// Blur image
+void blur(int height, int width, RGBTRIPLE image[height][width])
+{
+    void addup(int height, int width, RGBTRIPLE image[height][width], int i, int j, int k, int l, float *avgb, float *avgg, float *avgr, int *n);
+
+    void average(int height, int width, RGBTRIPLE image[height][width], int i, int j, float avgb, float avgg, float avgr, int n);
+
+    typedef struct
+    {
+        int red;
+        int blue;
+        int green;
+    }
+    pixel;
+
+    pixel pixels[height][width];
+
+    double a = 0;
+
+    for (int i = 0; i < height; i ++)
+    {
+        for (int j = 0; j < width; j ++)
+        {
+
+            float avgb = 0;
+            float avgg = 0;
+            float avgr = 0;
+            int n = 0;
+
+
+
+               for(int k = (i - 1); k <= (i + 1); k ++)
+               {
+                   for (int l = (j - 1); l <= (j + 1); l ++)
+                   {
+                       if (k >= 0 && k < height && l >=0 && l < width)
+                       {
+                            float blue = image[k][l].rgbtBlue;
+                            float green = image[k][l].rgbtGreen;
+                            float red = image[k][l].rgbtRed;
+                            avgb += blue;
+                            avgg += green;
+                            avgr += red;
+                            n++;
+                       }
+                   }
+               }
+               // create array to temporarily hold the values for the red grren blue values of each pixel
+                pixels[i][j].blue = (int)((avgb / n) + 0.5);
+                pixels[i][j].green = (int)((avgg / n) + 0.5);
+                pixels[i][j].red = (int)((avgr / n) + 0.5);
+                a ++;
+        }
+    }
+
+    for (int i = 0; i < height; i ++)
+    {
+        for (int j = 0; j < width; j ++)
+        {
+            image[i][j].rgbtBlue = pixels[i][j].blue;
+            image[i][j].rgbtGreen = pixels[i][j].green;
+            image[i][j].rgbtRed = pixels[i][j].red;
+        }
+    }
+    return;
+}
+
+void addup(int height, int width, RGBTRIPLE image[height][width], int i, int j, int k, int l, float *avgb, float *avgg, float *avgr, int *n)
+{
+
+        avgb = avgb + image[k][l].rgbtBlue;
+        avgg = avgg + image[k][l].rgbtGreen;
+        avgr = avgr + image[k][l].rgbtRed;
+    n++;
+
+}
+
+void average(int height, int width, RGBTRIPLE image[height][width], int i, int j, float avgb, float avgg, float avgr, int n)
+{
+    image[i][j].rgbtBlue = (int)((avgb / n) + 0.5);
+    image[i][j].rgbtGreen = (int)((avgg / n) + 0.5);
+    image[i][j].rgbtRed = (int)((avgr / n) + 0.5);
+}
