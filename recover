@@ -11,8 +11,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    char *infile = argv[1];
+
     //open file user specifies
-    FILE *file = fopen(argv[1], "r");
+    FILE *file = fopen(infile, "r");
     if (!file)
     {
         return 1;
@@ -22,14 +24,14 @@ int main(int argc, char *argv[])
     typedef uint8_t BYTE;
 
     //array called buffer to store bytes
-    BYTE  buffer[512];
+    BYTE buffer[512];
 
     char *filename = "000";
     int filenum = 0;
     FILE *img = NULL;
 
     //condition to iterate through file (hopefully!)
-    for (int i = 0; i < sizeof(file); i++)
+    while (fread(buffer, 512, 1, file) == 1)
     {
         //read 512 bytes of memory card into buffer array
         fread(buffer, 512, 1, file);
@@ -37,25 +39,18 @@ int main(int argc, char *argv[])
         //check if jpg
         if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
         {
-            //check if first image
-            if (filenum == 0)
+            //check if not first image
+            if (filenum != 0)
             {
-                sprintf(filename, "%03i.jpg", filenum); //sets format of filename to three integer digits
-                filenum ++; //int representing file name
-                img = fopen(filename, "w"); //open new image file and name it
-                fwrite(buffer, 512, 1, img); //write 512 bytes you just read to the file you just opened
-            }
-            else
-            {
-                fclose(img);//close current image writing to
-                sprintf(filename, "%03i.jpg", filenum); //sets format of filename to three integer digits
-                filenum ++; //int representing file name
-                img = fopen(filename, "w"); //open new image file and name it
-                fwrite(buffer, 512, 1, img); //write 512 bytes you just read to the file you just opened
+                 fclose(img);//close current image writing to
             }
 
+            filenum ++; //int representing file name
+            sprintf(filename, "%03i.jpg", filenum); //sets format of filename to three integer digits
+            img = fopen(filename, "w"); //open new image file and name it
+            fwrite(buffer, 512, 1, img); //write 512 bytes you just read to the file you just opened
         }
-        else
+        else if (filenum != 0)
         {
             fwrite(buffer, 512, 1, img);
         }
