@@ -61,46 +61,36 @@ bool load(const char *dictionary)
 
     char *buffer = NULL;
 
-    bool firstletter = true;
-
-
-    int p = 0;
-
     while (fscanf(file, "%s", buffer) != EOF)
     {
-            node *n = malloc(sizeof(node));
+        node *n = malloc(sizeof(node));
 
-            if (n == NULL)
-            {
-                return false;
-            }
+        if (n == NULL)
+        {
+            return false;
+        }
 
-            for (int i = 0; i <= strlen(buffer); i++)
-            {
-                n->word[i] = buffer[i];
-            }
+        for (int i = 0; i <= strlen(buffer); i++)
+        {
+            n->word[i] = buffer[i];
+        }
 
+        n->next = NULL;
 
-            n->next = NULL;
+        int index = hash(n->word);
 
-            int index = hash(n->word);
+        //check if first of that letter to enter hash table
+        if (table[index]->next == NULL)
+        {
+            table[index] = n;
+        }
 
-            node *tmp = NULL;
-
-    //check if first of that letter to enter hash table
-    if (table[index]->next == NULL)
-    {
-        table[index] = n;
-    }
-
-    //otherwise iterate through hash table to end & plop there
-    else
-    {
-        n->next = table[index]->next;
-        table[index]->next = n;
-    }
-
-
+        //otherwise iterate through hash table to end & plop there
+        else
+        {
+            n->next = table[index]->next;
+            table[index]->next = n;
+        }
     }
     return true;
 }
@@ -118,7 +108,7 @@ bool unload(void)
     for (int j = 0; j <= 25; j++)
     {
         node *cursor = table[j];
-        while (cursor->next !=NULL)
+        while (cursor->next != NULL)
         {
             node *tmp = cursor->next;
             free(cursor);
