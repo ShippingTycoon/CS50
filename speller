@@ -1,0 +1,131 @@
+// Implements a dictionary's functionality
+
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <strings.h>
+#include <string.h>
+
+#include "dictionary.h"
+
+// Represents a node in a hash table
+typedef struct node
+{
+    char word[LENGTH + 1];
+    struct node *next;
+}
+node;
+
+unsigned int counter = 0;
+
+// Number of buckets in hash table
+const unsigned int N = 26;
+
+// Hash table
+node *table[N];
+
+// Returns true if word is in dictionary else false
+bool check(const char *word)
+{
+    int index = hash(word);
+    node *tmp = table[index];
+    while (strcasecmp(word, tmp->word) != 0)
+    {
+        if (tmp->next == NULL)
+        {
+            return false;
+        }
+
+        tmp = tmp->next;
+    }
+    return true;
+}
+
+// Hashes word to a number
+unsigned int hash(const char *word)
+{
+    return tolower(word[0]) - 97;
+    counter ++;
+
+}
+
+// Loads dictionary into memory, returning true if successful else false
+bool load(const char *dictionary)
+{
+    FILE *file = fopen(dictionary, "r");
+    if (!file)
+    {
+        return false;
+    }
+
+    char *buffer = NULL;
+
+    bool firstletter = true;
+
+
+    int p = 0;
+
+    while (fscanf(file, "%s", buffer) != EOF)
+    {
+            node *n = malloc(sizeof(node));
+
+            if (n == NULL)
+            {
+                return false;
+            }
+
+            for (int i = 0; i <= strlen(buffer); i++)
+            {
+                n->word[i] = buffer[i];
+            }
+
+
+            n->next = NULL;
+
+            int index = hash(n->word);
+
+            node *tmp = NULL;
+
+    //check if first of that letter to enter hash table
+    if (table[index]->next == NULL)
+    {
+        table[index] = n;
+    }
+
+    //otherwise iterate through hash table to end & plop there
+    else
+    {
+        n->next = table[index]->next;
+        table[index]->next = n;
+    }
+
+
+    }
+    return true;
+}
+
+// Returns number of words in dictionary if loaded else 0 if not yet loaded
+unsigned int size(void)
+{
+    // TODO
+    return counter;
+}
+
+// Unloads dictionary from memory, returning true if successful else false
+bool unload(void)
+{
+    for (int j = 0; j <= 25; j++)
+    {
+        node *cursor = table[j];
+        while (cursor->next !=NULL)
+        {
+            node *tmp = cursor->next;
+            free(cursor);
+            cursor = tmp;
+        }
+        free(cursor);
+    }
+
+    return true;
+}
