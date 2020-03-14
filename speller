@@ -18,6 +18,7 @@ typedef struct node
 node;
 
 unsigned int counter = 0;
+bool loaded = false;
 
 // Number of buckets in hash table
 const unsigned int N = 26;
@@ -28,9 +29,18 @@ node *table[N];
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
+    char *wordlower = malloc(LENGTH);
+
+    for (int i = 0; i < LENGTH; i++)
+    {
+        wordlower[i] = tolower(word[i]);
+    }
+
     int index = hash(word);
+
     node *tmp = table[index];
-    while (strcasecmp(word, tmp->word) != 0)
+
+    while (strcasecmp(wordlower, tmp->word) != 0)
     {
         if (tmp->next == NULL)
         {
@@ -45,21 +55,24 @@ bool check(const char *word)
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
-    return tolower(word[0]) - 97;
-    counter ++;
+    return (tolower(word[0]) - 97) % 25;
 
 }
 
 // Loads dictionary into memory, returning true if successful else false
 bool load(const char *dictionary)
 {
+    for (int i = 0; i < N; i++)
+    {
+        table[i] = NULL;
+    }
     FILE *file = fopen(dictionary, "r");
-    if (!file)
+    if (file == NULL)
     {
         return false;
     }
 
-    char *buffer = NULL;
+    char buffer[LENGTH + 1];
 
     while (fscanf(file, "%s", buffer) != EOF)
     {
@@ -70,36 +83,42 @@ bool load(const char *dictionary)
             return false;
         }
 
-        for (int i = 0; i <= strlen(buffer); i++)
-        {
-            n->word[i] = buffer[i];
-        }
+        strcpy(n->word, buffer);
 
         n->next = NULL;
 
         int index = hash(n->word);
 
         //check if first of that letter to enter hash table
-        if (table[index]->next == NULL)
+        if (table[index] == NULL)
         {
             table[index] = n;
         }
 
-        //otherwise iterate through hash table to end & plop there
+        //otherwise place node at the start of the hash table
         else
         {
-            n->next = table[index]->next;
-            table[index]->next = n;
+            n->next = table[index];
+            table[index] = n;
         }
+        counter++;
     }
+    loaded = true;
+    fclose(file);
     return true;
 }
 
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
-    return counter;
+    if (loaded == true)
+    {
+        return counter;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 // Unloads dictionary from memory, returning true if successful else false
