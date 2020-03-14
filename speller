@@ -49,7 +49,11 @@ bool check(const char *word)
 
         tmp = tmp->next;
     }
-    return true;
+    if (strcasecmp(wordlower, tmp->word) == 0)
+    {
+        return true;
+    }
+    return false;
 }
 
 // Hashes word to a number
@@ -89,18 +93,9 @@ bool load(const char *dictionary)
 
         int index = hash(n->word);
 
-        //check if first of that letter to enter hash table
-        if (table[index] == NULL)
-        {
-            table[index] = n;
-        }
-
-        //otherwise place node at the start of the hash table
-        else
-        {
-            n->next = table[index];
-            table[index] = n;
-        }
+        n->next = table[index];
+        table[index] = n;
+        
         counter++;
     }
     loaded = true;
@@ -124,7 +119,7 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    for (int j = 0; j <= 25; j++)
+    for (int j = 0; j < N; j++)
     {
         node *cursor = table[j];
         while (cursor->next != NULL)
