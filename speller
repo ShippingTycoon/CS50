@@ -24,26 +24,36 @@ bool loaded = false;
 const unsigned int N = 26;
 
 // Hash table
-node *table[N];
+node *table[N]; //not using malloc to assign space, could use malloc?
 
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
     char *wordlower = malloc(LENGTH);
-
-    for (int i = 0; i < LENGTH; i++)
+    int i = 0;
+    while (word[i] != '\0')
     {
         wordlower[i] = tolower(word[i]);
+        i++;
     }
 
     int index = hash(word);
 
-    node *tmp = table[index];
+    node *tmp = NULL;
+
+    tmp = table[index];
+
+    if (table[index]->word[0] == '\0')
+    {
+        free(wordlower);
+        return false;
+    }
 
     while (strcasecmp(wordlower, tmp->word) != 0)
     {
         if (tmp->next == NULL)
         {
+            free(wordlower);
             return false;
         }
 
@@ -51,8 +61,10 @@ bool check(const char *word)
     }
     if (strcasecmp(wordlower, tmp->word) == 0)
     {
+        free(wordlower);
         return true;
     }
+    free(wordlower);
     return false;
 }
 
@@ -93,9 +105,11 @@ bool load(const char *dictionary)
 
         int index = hash(n->word);
 
+
+
         n->next = table[index];
         table[index] = n;
-        
+
         counter++;
     }
     loaded = true;
@@ -119,17 +133,22 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    for (int j = 0; j < N; j++)
+    node *cursor = NULL;
+    for (int j = 0; j <= 25; j++)
     {
-        node *cursor = table[j];
-        while (cursor->next != NULL)
+        cursor = table[j];
+        if (cursor != NULL)
         {
-            node *tmp = cursor->next;
-            free(cursor);
-            cursor = tmp;
+            while (cursor != NULL)
+            {
+                node *tmp = NULL;
+                tmp = cursor;
+                cursor = cursor->next;
+                free(tmp);
+            }
         }
-        free(cursor);
+        table[j] = NULL;
     }
-
+    free(cursor);
     return true;
 }
