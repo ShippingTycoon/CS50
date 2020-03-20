@@ -29,9 +29,16 @@ node *table[N]; //not using malloc to assign space, could use malloc?
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
-    char *wordlower = malloc(LENGTH);
 
-    for (int i = 0; i < LENGTH; i++)
+    char wordlower[LENGTH + 1];
+    wordlower[0] = 'a';
+
+    if (word[0] == '\0')
+    {
+        return false;
+    }
+
+    for (int i = 0; i <= LENGTH; i++)
     {
         wordlower[i] = tolower(word[i]);
     }
@@ -44,7 +51,6 @@ bool check(const char *word)
 
     if (table[index]->word[0] == '\0')
     {
-        free(wordlower);
         return false;
     }
 
@@ -52,7 +58,6 @@ bool check(const char *word)
     {
         if (tmp->next == NULL)
         {
-            free(wordlower);
             return false;
         }
 
@@ -60,10 +65,8 @@ bool check(const char *word)
     }
     if (strcasecmp(wordlower, tmp->word) == 0)
     {
-        free(wordlower);
         return true;
     }
-    free(wordlower);
     return false;
 }
 
