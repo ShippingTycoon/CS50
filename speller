@@ -31,14 +31,18 @@ bool check(const char *word)
 {
 
     char wordlower[LENGTH + 1];
-    wordlower[0] = 'a';
+
+    for (int i = 0; i <= LENGTH; i++)
+    {
+        wordlower[i] = '\0';
+    }
 
     if (word[0] == '\0')
     {
         return false;
     }
 
-    for (int i = 0; i <= LENGTH; i++)
+    for (int i = 0; word[i] != '\0'; i++)
     {
         wordlower[i] = tolower(word[i]);
     }
