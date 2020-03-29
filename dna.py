@@ -54,12 +54,15 @@ text = txt.read()
 def max_consecutive(string):
     counter = 0
     maximum = 0
+    length = len(string)
     for i in range(len(text)):
-        if text[i:(i + len(string))] == string:
-            i += len(string)
+        if text[i:(i + length)] == string:
+            j = i
             while True:
-                counter += 1 #couter is infinitely looping
-                if text[i:(i + len(string))] != string:
+                j += length
+                counter += 1
+                hi = text[j:(j + length)]
+                if hi != string:
                     maximum = counter
                     counter = 0
                     break
@@ -68,15 +71,18 @@ def max_consecutive(string):
 sample = person
 sample.name = "?"
 sample.AGATC = max_consecutive("AGATC")
-sample.TTTTTTCT = 0
-sample.AATG = 0
-sample.TCTAG = 0
-sample.GATA = 0
-sample.TATC = 0
-sample.GAAA = 0
-sample.TCTG = 0
-
+sample.TTTTTTCT = max_consecutive("TTTTTTCT")
+sample.AATG = max_consecutive("AATG")
+sample.TCTAG = max_consecutive("TCTAG")
+sample.GATA = max_consecutive("GATA")
+sample.TATC = max_consecutive("TATC")
+sample.GAAA = max_consecutive("GAAA")
+sample.TCTG = max_consecutive("TCTG")
 print(sample.AGATC)
-
-
-
+print(sample.TTTTTTCT)
+print(sample.AATG)
+print(sample.TCTAG)
+print(sample.GATA)
+print(sample.TATC)
+print(sample.GAAA)
+print(sample.TCTG)
