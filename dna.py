@@ -47,6 +47,36 @@ with table:
         tmp.TCTG = int(row['TCTG'])
         people.append(tmp)
 
+#read dna file into vaiable
 text = txt.read()
 
-print(text)
+#make function to search for how many repeating occurances of that string there are in the text
+def max_consecutive(string):
+    counter = 0
+    maximum = 0
+    for i in range(len(text)):
+        if text[i:(i + len(string))] == string:
+            i += len(string)
+            while True:
+                counter += 1 #couter is infinitely looping
+                if text[i:(i + len(string))] != string:
+                    maximum = counter
+                    counter = 0
+                    break
+    return maximum
+
+sample = person
+sample.name = "?"
+sample.AGATC = max_consecutive("AGATC")
+sample.TTTTTTCT = 0
+sample.AATG = 0
+sample.TCTAG = 0
+sample.GATA = 0
+sample.TATC = 0
+sample.GAAA = 0
+sample.TCTG = 0
+
+print(sample.AGATC)
+
+
+
