@@ -4,85 +4,83 @@ from sys import argv, exit
 import os
 import csv
 
-if len(argv) != 3:
-    print("Missing command-line argument")
-    exit(1)
 
-#define structure used to store csv database
-class person():
-    def __init__(self):
-        self.name: str
-        self.AGATC: int
-        self.TTTTTTCT: int
-        self.AATG: int
-        self.TCTAG: int
-        self.GATA: int
-        self.TATC: int
-        self.GAAA: int
-        self.TCTG: int
+def main():
 
-#define array to staor individual people's info from database
-people = []
+    if len(argv) != 3:
+        print("Usage: python dna.py filename.csv filename.txt")
+        exit(1)
 
-#open files
-table = open(argv[1], 'r')
+    #define structure used to store csv database
+    class person():
+        def __init__(self):
+            self.name: str
+            self.AGATC: int
+            self.TTTTTTCT: int
+            self.AATG: int
+            self.TCTAG: int
+            self.GATA: int
+            self.TATC: int
+            self.GAAA: int
+            self.TCTG: int
 
-txt = open(argv[2], 'r')
+    #define array to staor individual people's info from database
+    people = []
 
-#read from csv file into memory
-with table:
+    #open files
+    table = open(argv[1], 'r')
 
-    reader = csv.DictReader(table)
+    txt = open(argv[2], 'r')
 
-    for row in reader:
-        tmp = person()
-        tmp.name = row['name']
-        tmp.AGATC = int(row['AGATC'])
-        tmp.TTTTTTCT = int(row['TTTTTTCT'])
-        tmp.AATG = int(row['AATG'])
-        tmp.TCTAG = int(row['TCTAG'])
-        tmp.GATA = int(row['GATA'])
-        tmp.TATC = int(row['TATC'])
-        tmp.GAAA = int(row['GAAA'])
-        tmp.TCTG = int(row['TCTG'])
-        people.append(tmp)
+    #read from csv file into memory
+    with table:
 
-#read dna file into vaiable
-text = txt.read()
+        reader = csv.DictReader(table)
 
-#make function to search for how many repeating occurances of that string there are in the text
-def max_consecutive(string):
-    counter = 0
-    maximum = 0
-    length = len(string)
-    for i in range(len(text)):
-        if text[i:(i + length)] == string:
-            j = i
-            while True:
-                j += length
-                counter += 1
-                hi = text[j:(j + length)]
-                if hi != string:
+        for row in reader:
+            tmp = person()
+            tmp.name = row['name']
+            tmp.AGATC = int(row['AGATC'])
+            tmp.TTTTTTCT = int(row['TTTTTTCT'])
+            tmp.AATG = int(row['AATG'])
+            tmp.TCTAG = int(row['TCTAG'])
+            tmp.GATA = int(row['GATA'])
+            tmp.TATC = int(row['TATC'])
+            tmp.GAAA = int(row['GAAA'])
+            tmp.TCTG = int(row['TCTG'])
+            people.append(tmp)
+
+    #read dna file into vaiable
+    text = txt.read()
+
+    #make function to search for how many repeating occurances of that string there are in the text (works now!)
+    def max_consecutive(string):
+        maximum = 0
+        length = len(string)
+        for i in range(len(text)):
+            counter = 0
+            while text[i:(i + length)] == string:
+                counter+=1
+                i = i + length
+                if maximum < counter:
                     maximum = counter
-                    counter = 0
-                    break
-    return maximum
+        return maximum
 
-sample = person
-sample.name = "?"
-sample.AGATC = max_consecutive("AGATC")
-sample.TTTTTTCT = max_consecutive("TTTTTTCT")
-sample.AATG = max_consecutive("AATG")
-sample.TCTAG = max_consecutive("TCTAG")
-sample.GATA = max_consecutive("GATA")
-sample.TATC = max_consecutive("TATC")
-sample.GAAA = max_consecutive("GAAA")
-sample.TCTG = max_consecutive("TCTG")
-print(sample.AGATC)
-print(sample.TTTTTTCT)
-print(sample.AATG)
-print(sample.TCTAG)
-print(sample.GATA)
-print(sample.TATC)
-print(sample.GAAA)
-print(sample.TCTG)
+    sample = person
+    sample.name = "?"
+    sample.AGATC = max_consecutive("AGATC")
+    sample.TTTTTTCT = max_consecutive("TTTTTTCT")
+    sample.AATG = max_consecutive("AATG")
+    sample.TCTAG = max_consecutive("TCTAG")
+    sample.GATA = max_consecutive("GATA")
+    sample.TATC = max_consecutive("TATC")
+    sample.GAAA = max_consecutive("GAAA")
+    sample.TCTG = max_consecutive("TCTG")
+
+    for i in range(len(people)):
+        if sample.AGATC == people[i].AGATC and sample.TTTTTTCT == people[i].TTTTTTCT and sample.AATG == people[i].AATG and sample.TCTAG == people[i].TCTAG and sample.GATA == people[i].GATA and sample.TATC == people[i].TATC and sample.GAAA == people[i].GAAA and sample.TCTG == people[i].TCTG:
+            print(people[i].name)
+            exit(0)
+    print("No Match")
+
+main()
