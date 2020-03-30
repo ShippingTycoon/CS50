@@ -24,7 +24,7 @@ def main():
         reader = csv.DictReader(table) #python magic
         dna_words = (reader.fieldnames) #creates array of the DNA to search for using the headers in the csv file
 
-    matches = [] #declaring array to store matches in
+    matches = {} #declaring array to store matches in
 
     #read dna file into vaiable
     text = txt.read()
@@ -48,21 +48,21 @@ def main():
 
     with open(argv[1], "r") as csvfile:
         reader = csv.DictReader(csvfile)
-        
+
         for row in reader: #iterates through csv row by row
-            for k, count in row.items():#goes over each item in the row
-                if count.isnumeric() == True: #checks if count is a number
-                    str_match = str(matches[k]) #returns string
-                    if count == str_match:
+            for dna, count in row.items():#iterates over each str and its count
+                if count.isnumeric() == True: #checks if count is a number (might be able to remove this)
+                    str_match = str(matches[dna]) #returns string
+                    if count == str_match: #checks if the count from the csv file matches the count from the txt file
                         match = True
                     else:
                         match = False
                         break
-            if match == True:
-                print(row['name'])
+            if match == True: #checks that match is still true after the whole row has been checked
+                print(row['name']) #prints name of match
                 exit(0)
 
-    print("No match")
+    print("No match") #if no match found, prints no match
 
 
 
