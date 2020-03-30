@@ -11,59 +11,74 @@ def main():
         print("Usage: python dna.py filename.csv filename.txt")
         exit(1)
 
-    #define array to store individual people's info from file
-    people = []
-
-    #open files
+    # open files
     table = open(argv[1], 'r')
 
     txt = open(argv[2], 'r')
 
-    #read from csv file into memory, populating an array of people
+    # read from csv file into memory, populating an array of people
     with table:
-        reader = csv.DictReader(table) #python magic
-        dna_words = (reader.fieldnames) #creates array of the DNA to search for using the headers in the csv file
+        # python magic
+        reader = csv.DictReader(table)
+        # creates array of the DNA to search for using the headers in the csv file
+        dna_words = (reader.fieldnames)
 
-    matches = {} #declaring array to store matches in
+    # declaring array to store matches in, curly braces indicates for strings
+    matches = {}
 
-    #read dna file into vaiable
+    # read dna file into vaiable
     text = txt.read()
 
-    #make function to search for how many repeating occurances of that string there are in the text (works now!)
+    # make function to search for how many repeating occurances of that string there are in the text
     def max_consecutive(string):
-        maximum = 0 #keep track of maximum
-        length = len(string) #nuber of characters in input
-        for j in range(len(text)): #start iterating through dna file looking for matches
-            counter = 0#setting counter to 0
-            while text[j:(j + length)] == string:#starting from where a match was found, iterate ahead finding more matches
-                counter+=1 #increase counter every consecutive match
-                j = j + length #iteration
-                if maximum < counter: #check for new max
+        # keep track of maximum
+        maximum = 0
+        # number of characters in input
+        length = len(string)
+        # start iterating through dna file looking for matches
+        for j in range(len(text)):
+            # setting counter to 0
+            counter = 0
+            # starting from where a match was found, iterate ahead finding more matches
+            while text[j:(j + length)] == string:
+                # increase counter every consecutive match
+                counter+=1
+                # iteration
+                j = j + length
+                # check for new max
+                if maximum < counter:
                     maximum = counter
-        return maximum #hand back maximum number of repeats
+        # hand back maximum number of repeats
+        return maximum
 
-    #iterate through STR values and pass to function to find the maximum consecutive occurances
+    # iterate through STR values and pass to function to find the maximum consecutive occurances
     for i in range(1, len(dna_words)):
         matches[dna_words[i]] = max_consecutive(dna_words[i])
 
     with open(argv[1], "r") as csvfile:
         reader = csv.DictReader(csvfile)
 
-        for row in reader: #iterates through csv row by row
-            for dna, count in row.items():#iterates over each str and its count
-                if count.isnumeric() == True: #checks if count is a number (might be able to remove this)
-                    str_match = str(matches[dna]) #returns string
-                    if count == str_match: #checks if the count from the csv file matches the count from the txt file
+         # iterates through csv row by row
+        for row in reader:
+            # iterates over each str and its count
+            for dna, count in row.items():
+                # checks if count is a number
+                if count.isnumeric() == True:
+                    # returns string
+                    str_match = str(matches[dna])
+                    # checks if the count from the csv file matches the count from the txt file
+                    if count == str_match:
                         match = True
                     else:
                         match = False
                         break
-            if match == True: #checks that match is still true after the whole row has been checked
-                print(row['name']) #prints name of match
+            # checks that match is still true after the whole row has been checked
+            if match == True:
+                # prints name of match
+                print(row['name'])
                 exit(0)
 
-    print("No match") #if no match found, prints no match
-
-
+    # if no match found, prints no match
+    print("No match")
 
 main()
