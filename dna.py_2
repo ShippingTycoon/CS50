@@ -1,0 +1,69 @@
+from dataclasses import dataclass
+import sys
+from sys import argv, exit
+import os
+import csv
+
+
+def main():
+
+    if len(argv) != 3:
+        print("Usage: python dna.py filename.csv filename.txt")
+        exit(1)
+
+    #define array to store individual people's info from file
+    people = []
+
+    #open files
+    table = open(argv[1], 'r')
+
+    txt = open(argv[2], 'r')
+
+    #read from csv file into memory, populating an array of people
+    with table:
+        reader = csv.DictReader(table) #python magic
+        dna_words = (reader.fieldnames) #creates array of the DNA to search for using the headers in the csv file
+
+    matches = [] #declaring array to store matches in
+
+    #read dna file into vaiable
+    text = txt.read()
+
+    #make function to search for how many repeating occurances of that string there are in the text (works now!)
+    def max_consecutive(string):
+        maximum = 0 #keep track of maximum
+        length = len(string) #nuber of characters in input
+        for j in range(len(text)): #start iterating through dna file looking for matches
+            counter = 0#setting counter to 0
+            while text[j:(j + length)] == string:#starting from where a match was found, iterate ahead finding more matches
+                counter+=1 #increase counter every consecutive match
+                j = j + length #iteration
+                if maximum < counter: #check for new max
+                    maximum = counter
+        return maximum #hand back maximum number of repeats
+
+    #iterate through STR values and pass to function to find the maximum consecutive occurances
+    for i in range(1, len(dna_words)):
+        matches[dna_words[i]] = max_consecutive(dna_words[i])
+
+    with open(argv[1], "r") as csvfile:
+        reader = csv.DictReader(csvfile)
+        
+        for row in reader: #iterates through csv row by row
+            for k, count in row.items():#goes over each item in the row
+                if count.isnumeric() == True: #checks if count is a number
+                    str_match = str(matches[k]) #returns string
+                    if count == str_match:
+                        match = True
+                    else:
+                        match = False
+                        break
+            if match == True:
+                print(row['name'])
+                exit(0)
+
+    print("No match")
+
+
+
+main()
