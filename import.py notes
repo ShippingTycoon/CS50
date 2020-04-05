@@ -1,0 +1,26 @@
+import csv
+
+# Open TSV file for reading
+with open("title.basics.tsv", "r") as titles:
+
+    # Since the file is a TSV file, we can use the CSV reader and change
+    # the separator to a tab.
+    reader = csv.DictReader(titles, delimiter="\t")
+
+    # Open new CSV file for writing
+    with open("shows0.csv", "w") as shows:
+
+        # Create writer
+        writer = csv.writer(shows)
+
+        # Write header of the columns we want
+        writer.writerow(["tconst", "primaryTitle", "startYear", "genres"])
+
+        # Iterate over TSV file
+        for row in reader:
+
+            # If non-adult TV show
+            if row["titleType"] == "tvSeries" and row["isAdult"] == "0":
+
+                # Write row, writing into the writer (which is shows from line 14) the value on that current row in the specific column listed in the argument below
+                writer.writerow([row["tconst"], row["primaryTitle"], row["startYear"], row["genres"]])
