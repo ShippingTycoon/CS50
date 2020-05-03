@@ -1,3 +1,6 @@
+Problem set https://cs50.harvard.edu/x/2020/psets/6/credit/
+
+
 from cs50 import get_int
 from sys import exit
 import sys
