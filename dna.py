@@ -1,3 +1,6 @@
+https://cs50.harvard.edu/x/2020/psets/6/dna/
+
+
 from dataclasses import dataclass
 import sys
 from sys import argv, exit
