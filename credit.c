@@ -2,250 +2,116 @@
 #include <stdio.h>
 #include <math.h>
 
-int main (void)
+int main(void)
 {
-    int visa;
-    int amex;
-    int mastercard;
+
     long card_number;
-    int nd;
-       long a;
-    long b;
-    long c;
-    long d;
-    long e;
-    long f;
-    long g;
-    long h;
-    long i;
-    long j;
-    long k;
-    long l;
-    long m;
-    long n;
-    long o;
-    long p;
-    long thing;
-    
-    do
-    {
+    int number_digits = 0;
+
+    // Count number of digits
     card_number = get_long("Number: ");
-    nd = (floor ( log10 ( card_number)) + 1);
-        }
-    while (card_number <= 0 || nd < 13 || nd == 14 || nd > 16);
-    
-    thing = pow(10, (nd-1));
-    
-    if (nd == 13)
-    {    
-        a = card_number / thing;
-            card_number = card_number - (a * thing);
-            thing = thing/10;
-        b = card_number / (thing);
-             card_number = card_number - (b* thing);
-             thing = thing/10;
-        c = card_number / thing;
-              card_number = card_number - (c * thing);
-        thing = thing/10;
-        d = card_number / thing;
-             card_number = card_number - (d * thing);
-        thing = thing/10;
-        e = card_number / thing;
-             card_number = card_number - (e * thing);
-        thing = thing/10;
-        f = card_number / thing;
-             card_number = card_number - (f * thing);
-        thing = thing/10;
-        g = card_number / thing;
-             card_number = card_number - (g * thing);
-        thing = thing/10;
-        h = card_number / thing;
-             card_number = card_number - (h * thing);
-        thing = thing/10;
-        i = card_number / thing;
-             card_number = card_number - (i * thing);
-        thing = thing/10;
-        j = card_number / thing;
-             card_number = card_number - (j * thing);
-        thing = thing/10;
-        k = card_number / thing;
-             card_number = card_number - (k * thing);
-        thing = thing/10;
-        l = card_number / thing;
-             card_number = card_number - (l * thing);
-        m = card_number;
-        
-        
-        
-        if (((((l*2)/10) + ((l*2)%10) + ((j*2)/10) + ((j*2)%10) + ((h*2)/10) + ((h*2)%10) + ((f*2)/10) + ((f*2)%10) + ((d*2)/10) + ((d*2)%10) + ((b*2)/10) + ((b*2)%10) + a + c + e + g + i + k + m) % 10) == 0)
+    long number = card_number;
+    while (number != 0)
+    {
+        number = number / 10;
+        number_digits ++;
+    }
+
+    if (number_digits == 13 || (number_digits > 14 && number_digits < 17))
+    {
+        // Initialise number array
+        int num_array[number_digits];
+
+        int new_number;
+
+        // Populate number array
+        for (int i = 1; i <= number_digits; i ++)
         {
-            if (a == 4)
+            new_number = card_number / pow(10, (number_digits - i));
+            num_array[i - 1] = new_number;
+            card_number -= new_number * pow(10, (number_digits - i));
+        }
+
+        // Luhn algorithm function
+
+        // Populate array with every other number multiplied by 2, separated out into individual digits
+        int step1[number_digits];
+        for (int i = 0; i < number_digits; i++)
+        {
+            step1[i] = 0;
+        }
+        int number_digits2;
+        int j = 0;
+        for (int i = number_digits - 2; i >= 0; i -= 2)
+        {
+            int tmp = (num_array[i] * 2);
+
+            // Separate new number into individual numbers
+            if (tmp >= 10)
             {
-            printf("VISA\n");
+                step1[j] = 1;
+                step1[j + 1] = tmp - 10;
+                j += 2;
             }
-            else 
+            else if (tmp < 10)
+            {
+                step1[j] = tmp;
+                j ++;
+            }
+        }
+
+        int step2 = 0;
+        // Add numbers in step1 array together
+        for (int i = 0; i < number_digits; i ++)
+        {
+            step2 += step1[i];
+        }
+
+        // Add the digits from the input number that werent multiplied by two
+        int step3 = 0;
+
+        for (int i = number_digits - 1; i >= 0; i -= 2)
+        {
+            step3 += num_array[i];
+        }
+
+        // Add step2 to step3
+        int step4 = step2 + step3;
+
+        // Check if number ends in 0
+        int step5 = step4 % 10;
+
+        // Check for card type
+        if (step5 == 0)
+        {
+            if (num_array[0] == 3 && (num_array[1] == 4 || num_array[1] == 7) && number_digits == 15)
+            {
+                printf("AMEX\n");
+                return 0;
+            }
+            else if (num_array[0] == 5 && (num_array[1] == 1 || num_array[1] == 2 || num_array[1] == 3 || num_array[1] == 4
+                                           || num_array[1] == 5) && number_digits == 16)
+            {
+                printf("MASTERCARD\n");
+                return 0;
+            }
+            else if (num_array[0] == 4 && (number_digits == 13 || number_digits == 16))
+            {
+                printf("VISA\n");
+                return 0;
+            }
+            else
             {
                 printf("INVALID\n");
             }
-          
         }
-        else 
-         
+        else
         {
-        
             printf("INVALID\n");
-             
         }
-        
     }
-  
-    
-     else if (nd == 15)
-    {    
-        a = card_number / thing;
-            card_number = card_number - (a * thing);
-            thing = thing/10;
-        b = card_number / (thing);
-             card_number = card_number - (b* thing);
-             thing = thing/10;
-        c = card_number / thing;
-              card_number = card_number - (c * thing);
-        thing = thing/10;
-        d = card_number / thing;
-             card_number = card_number - (d * thing);
-        thing = thing/10;
-        e = card_number / thing;
-             card_number = card_number - (e * thing);
-        thing = thing/10;
-        f = card_number / thing;
-             card_number = card_number - (f * thing);
-        thing = thing/10;
-        g = card_number / thing;
-             card_number = card_number - (g * thing);
-        thing = thing/10;
-        h = card_number / thing;
-             card_number = card_number - (h * thing);
-        thing = thing/10;
-        i = card_number / thing;
-             card_number = card_number - (i * thing);
-        thing = thing/10;
-        j = card_number / thing;
-             card_number = card_number - (j * thing);
-        thing = thing/10;
-        k = card_number / thing;
-             card_number = card_number - (k * thing);
-        thing = thing/10;
-        l = card_number / thing;
-             card_number = card_number - (l * thing);
-           thing = thing/10;
-        m = card_number / thing;
-             card_number = card_number - (m * thing);
-           thing = thing/10;
-        n = card_number / thing;
-             card_number = card_number - (n * thing);
-           thing = thing/10;
-        o = card_number / thing;
-         
-         if (((((n*2)/10) + ((n*2)%10) + ((l*2)/10) + ((l*2)%10) + ((j*2)/10) + ((j*2)%10) + ((h*2)/10) + ((h*2)%10) + ((f*2)/10) + ((f*2)%10) + ((d*2)/10) + ((d*2)%10) + ((b*2)/10) + ((b*2)%10) + a + c + e + g + i + k + m + o) % 10) == 0)
-        {
-             if ((a == 3 && b == 4) || (a ==3 && b == 7))
-             {
-            printf("AMEX\n");
-             }
-             else
-             {
-                 printf("INVALID");
-             }
-          
-        }
-        else 
-         
-        {
-         
-            printf("INVALID\n");
-             
-        }
-        
+    else
+    {
+        printf("INVALID\n");
     }
-    
-    
-       else if (nd == 16)
-    {    
-       a = card_number / thing;
-            card_number = card_number - (a * thing);
-            thing = thing/10;
-        b = card_number / (thing);
-             card_number = card_number - (b* thing);
-             thing = thing/10;
-        c = card_number / thing;
-              card_number = card_number - (c * thing);
-        thing = thing/10;
-        d = card_number / thing;
-             card_number = card_number - (d * thing);
-        thing = thing/10;
-        e = card_number / thing;
-             card_number = card_number - (e * thing);
-        thing = thing/10;
-        f = card_number / thing;
-             card_number = card_number - (f * thing);
-        thing = thing/10;
-        g = card_number / thing;
-             card_number = card_number - (g * thing);
-        thing = thing/10;
-        h = card_number / thing;
-             card_number = card_number - (h * thing);
-        thing = thing/10;
-        i = card_number / thing;
-             card_number = card_number - (i * thing);
-        thing = thing/10;
-        j = card_number / thing;
-             card_number = card_number - (j * thing);
-        thing = thing/10;
-        k = card_number / thing;
-             card_number = card_number - (k * thing);
-        thing = thing/10;
-        l = card_number / thing;
-             card_number = card_number - (l * thing);
-           thing = thing/10;
-        m = card_number / thing;
-             card_number = card_number - (m * thing);
-           thing = thing/10;
-        n = card_number / thing;
-             card_number = card_number - (n * thing);
-           thing = thing/10;
-        o = card_number / thing;
-             card_number = card_number - (o * thing);
-        p = card_number;
-           
-           if (((((o*2)/10) + ((o*2)%10) + ((m*2)/10) + ((m*2)%10) + ((k*2)/10) + ((k*2)%10) + ((i*2)/10) + ((i*2)%10) + ((g*2)/10) + ((g*2)%10) + ((e*2)/10) + ((e*2)%10) + ((c*2)/10) + ((c*2)%10) + ((a*2)/10) + ((a*2)%10) + b + d + f + h + j + l + n + p) % 10) == 0)
-        {
-               if (a == 4)
-               {
-            printf("VISA\n");
-               }
-               else if (a == 5 && ((b == 1) || (b = 2) || (b = 3) || (b = 4) || (b = 5)))
-               {
-                   printf("MASTERCARD\n");
-               }
-               else
-               {
-                   printf("INVALID\n");
-               }
-          
-        }
-        else 
-         
-        {
-       
-            printf("INVALID\n");
-             
-        }
-        
-    }
-    
-    
-    
-    
 }
-    
-
