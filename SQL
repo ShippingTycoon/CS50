@@ -1,0 +1,1 @@
+SQL code from CS50 in different folder https://github.com/ShippingTycoon/SQL
