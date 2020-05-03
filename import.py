@@ -1,3 +1,6 @@
+https://cs50.harvard.edu/x/2020/psets/7/houses/
+
+
 from cs50 import SQL
 from sys import argv,exit
 import csv
