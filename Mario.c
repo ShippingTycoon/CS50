@@ -6,34 +6,38 @@
 int main(void)
 {
     int h;
-        
-       do
-             
+
+    // Get height from user
+    do
+    {
         h = get_int("Height: ");
-    
-    while (h <1 || h > 8);        
-    
+    }
+    while (h < 1 || h > 8);
+
+    // Print out pyramid
     for (int i = 0; i < h; i++)
     {
+        // Number of spaces needed to come before hash
         for (int spaces = (h - 1); spaces > i; spaces--)
         {
-            printf(".");
+            printf(" ");
         }
-        
+
+        // Number of hashes to print
         for (int first = 0; first <= i; first++)
         {
             printf("#");
         }
-   
-        printf(" ");
- 
-    for (int third = 0; third <= i; third++)
-    {
-        printf("#");
+
+        // Space in the middle
+        printf("  ");
+
+        // Hashes on other side
+        for (int third = 0; third <= i; third++)
+        {
+            printf("#");
+        }
+        printf("\n");
     }
-    printf("\n");
-    }   
-    
-   
-    
+
 }
